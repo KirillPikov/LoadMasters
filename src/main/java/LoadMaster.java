@@ -1,20 +1,51 @@
-import javafx.util.Pair;
+import java.util.List;
+import java.util.Queue;
 
-import java.util.concurrent.Callable;
+public class LoadMaster implements Runnable {
 
-public class LoadMaster implements Callable<Pair<Boolean, Cargo>> {
+    /** Основная очередь грузов. */
+    private final Queue<Cargo> mainCargoQueue;
 
-    /** Груз, который будем пытаться положить в самолёт. */
-    Cargo cargo;
+    /** Очередь грузов, для которых на не нашлось самолёта. */
+    private final Queue<Cargo> garageCargoQueue;
 
-    /** Самолёт, в который пытаемся положить груз. */
-    Plane plane;
+    /** Очередь доступных самолётов. */
+    private final List<Plane> planeQueue;
 
-    public LoadMaster(Cargo cargo, Plane plane) {
+    public LoadMaster(Queue<Cargo> mainCargoQueue, Queue<Cargo> garageCargoQueue, List<Plane> planeQueue) {
+        this.mainCargoQueue = mainCargoQueue;
+        this.garageCargoQueue = garageCargoQueue;
+        this.planeQueue = planeQueue;
     }
 
     @Override
-    public Pair<Boolean, Cargo> call() throws Exception {
-        return null;
+    public synchronized void run() {
+        System.out.println("Thread " + this);
+        Cargo cargo = null;
+        Plane plane = null;
+        if(!garageCargoQueue.isEmpty()) {
+            cargo = garageCargoQueue.poll();
+        }
+        else if(!mainCargoQueue.isEmpty()) {
+            cargo = mainCargoQueue.poll();
+        }
+        if(cargo != null) {
+            for (int i = 0; i < planeQueue.size(); i++) {
+                System.out.println("==================================================");
+                System.out.println(cargo);
+                plane = planeQueue.get(i);
+                System.out.println(plane);
+                if(plane.canTransferCargo(cargo)) {
+                    plane.putCargo(cargo);
+                    System.out.println(plane);
+                    System.out.println("==================================================");
+                    break;
+                }
+
+            }
+        }
+        if(plane != null && plane.isReady()) {
+            planeQueue.remove(plane);
+        }
     }
 }
