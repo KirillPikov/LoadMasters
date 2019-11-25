@@ -12,7 +12,7 @@ public class Cabin {
     private final int maxVolume;
 
     /** Свободный объём отсека. */
-    private final int freeVolume;
+    private int freeVolume;
 
     /** Тип какого груза должен перевозить. */
     private final CargoType type;
@@ -52,9 +52,11 @@ public class Cabin {
                 if(cargo.getType() != CargoType.LIVE && cargo.getType() != CargoType.PERISHABLE &&
                         this.getType() != CargoType.DANGEROUS && this.getType() != CargoType.ORDINARY) {
                     cargoSet.add(cargo);
+                    this.freeVolume -= cargo.getVolume();
                 }
             } else /* В случае, если есть место и типы совпадают, просто добавляем груз */ {
                 cargoSet.add(cargo);
+                this.freeVolume -= cargo.getVolume();
             }
         } else if(cargo.getType() == this.getType()) /* В случае, если места нет, но типы совпадают */ {
             /* Пробегаемся по всем хранящимся грузам */
@@ -67,6 +69,7 @@ public class Cabin {
                         removedCargo = currentCargo;
                         cargoSet.remove(removedCargo);
                         cargoSet.add(cargo);
+                        this.freeVolume -= cargo.getVolume();
                         break;
                     }
                 }
