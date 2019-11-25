@@ -6,7 +6,7 @@ import java.util.TimerTask;
 public class CargoGenerator extends TimerTask {
 
     /** Очередь грузов. */
-    private Queue<Cargo> cargoQueue;
+    private final Queue<Cargo> cargoQueue;
 
     /**
      * Конструктор с параметром.
@@ -22,8 +22,10 @@ public class CargoGenerator extends TimerTask {
         int volume = Math.abs(new Random().nextInt()) % Settings.MAX_CARGO_VOLUME + Settings.MIN_CARGO_VOLUME;
         CargoType cargoType = CargoType.getRandomCargoType();
         Destination destination = Destination.getRandomDestination();
-        cargoQueue.add(
-            new Cargo(volume, cargoType, destination)
-        );
+        synchronized (cargoQueue) {
+            cargoQueue.add(
+                    new Cargo(volume, cargoType, destination)
+            );
+        }
     }
 }
