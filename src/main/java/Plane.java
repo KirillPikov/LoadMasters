@@ -55,6 +55,7 @@ public class Plane {
      * при этом значени пары и есть груз, на который заменили.
      */
     public Pair<Boolean, Cargo> putCargo(Cargo cargo) {
+        System.out.println("PUT!!!!");
         boolean canTransfer = false;
         Pair<Boolean, Cargo> putResult = null;
         /* Пробегаемся по всем отсекам */
@@ -86,6 +87,8 @@ public class Plane {
                     cargoTypesSet.contains(CargoType.DANGEROUS) && cargoTypesSet.contains(CargoType.ORDINARY)) {
                 canTransferType = true;
             }
+        } else {
+            canTransferType = true;
         }
         /* Вернут результат условия "Если место назначения груза совпадает с местом отправки И можем перевозить" */
         return this.destination == cargo.getDestination() && canTransferType;
