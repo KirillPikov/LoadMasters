@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.logging.Logger;
 
 /**
  * Самолёт.
@@ -55,7 +56,6 @@ public class Plane {
      * при этом значени пары и есть груз, на который заменили.
      */
     public Pair<Boolean, Cargo> putCargo(Cargo cargo) {
-        System.out.println("PUT!!!!");
         boolean canTransfer = false;
         Pair<Boolean, Cargo> putResult = null;
         /* Пробегаемся по всем отсекам */
@@ -83,8 +83,7 @@ public class Plane {
         boolean canTransferType = false;
         /* Проверяем, можем ли по правилам задачи перевозить груз этого типа в отсеке этого типа */
         if(!cargoTypesSet.contains(cargo.getType())) {
-            if(cargo.getType() != CargoType.LIVE && cargo.getType() != CargoType.PERISHABLE &&
-                    cargoTypesSet.contains(CargoType.DANGEROUS) && cargoTypesSet.contains(CargoType.ORDINARY)) {
+            if(cargo.getType() != CargoType.LIVE && cargo.getType() != CargoType.PERISHABLE) {
                 canTransferType = true;
             }
         } else {

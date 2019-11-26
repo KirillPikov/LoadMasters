@@ -1,3 +1,6 @@
+import com.sun.org.apache.xpath.internal.operations.Bool;
+import javafx.util.Pair;
+
 import java.util.List;
 import java.util.Queue;
 
@@ -23,6 +26,7 @@ public class LoadMaster implements Runnable {
         System.out.println("Thread " + this);
         Cargo cargo = null;
         Plane plane = null;
+        Pair<Boolean, Cargo> resultPut = null;
         if(!garageCargoQueue.isEmpty()) {
             cargo = garageCargoQueue.poll();
         }
@@ -31,21 +35,23 @@ public class LoadMaster implements Runnable {
         }
         if(cargo != null) {
             for (int i = 0; i < planeQueue.size(); i++) {
-                System.out.println("==================================================");
-                System.out.println(cargo);
                 plane = planeQueue.get(i);
-                System.out.println(plane);
                 if(plane.canTransferCargo(cargo)) {
-                    plane.putCargo(cargo);
-                    System.out.println(plane);
-                    System.out.println("==================================================");
+                    System.out.println("OK!K!");
+                    resultPut = plane.putCargo(cargo);
+                    System.out.println(resultPut);
                     break;
                 }
 
             }
         }
-        if(plane != null && plane.isReady()) {
-            planeQueue.remove(plane);
+        System.out.println(resultPut);
+        if(resultPut != null && !resultPut.getKey()) {
+            garageCargoQueue.add(resultPut.getValue());
+        }
+        if(plane != null && !plane.isReady()) {
+            System.out.println("ADD!");
+            planeQueue.add(plane);
         }
     }
 }

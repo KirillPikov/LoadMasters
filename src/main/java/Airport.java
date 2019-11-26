@@ -1,9 +1,6 @@
-import javafx.util.Pair;
-
 import java.util.*;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
 
 public class Airport {
     /** Основная очередь грузов. */
@@ -20,19 +17,20 @@ public class Airport {
         garageCargoQueue = new ArrayDeque<>();
         planeQueue = new ArrayList<>();
     }
-        //TODO Не убавляется freeVolume в отсеке
-    public void startWork() throws InterruptedException {
+
+    public synchronized void startWork() throws InterruptedException {
         Executor executor = Executors.newFixedThreadPool(3);
         Timer timer = new Timer();
         TimerTask cargoGenerator = new CargoGenerator(mainCargoQueue);
-        timer.schedule(cargoGenerator, 0, 500);
+        timer.schedule(cargoGenerator, 0, 1000);
         TimerTask planeGenerator = new PlaneGenerator(planeQueue);
-        timer.schedule(planeGenerator, 0, 500);
+        timer.schedule(planeGenerator, 0, 20000);
         while (true) {
             executor.execute(new LoadMaster(mainCargoQueue, garageCargoQueue, planeQueue));
-       //     System.out.println(Arrays.toString(mainCargoQueue.toArray()));
-        //    System.out.println(Arrays.toString(planeQueue.toArray()));
-            Thread.sleep(500);
+            System.out.println(Arrays.toString(garageCargoQueue.toArray()));
+            System.out.println(Arrays.toString(mainCargoQueue.toArray()));
+            System.out.println(Arrays.toString(planeQueue.toArray()));
+            Thread.sleep(2000);
         }
     }
 }
