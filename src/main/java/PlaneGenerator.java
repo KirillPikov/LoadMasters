@@ -19,6 +19,7 @@ public class PlaneGenerator extends TimerTask {
     /**  Метод, выполняющий генерацю самолёта. */
     @Override
     public void run() {
+        System.out.println(this + " Начало задачи генератора самолётов ");
         Destination destination = Destination.getRandomDestination();
         Plane plane = new Plane(destination);
         int cabinCount = Math.abs(new Random().nextInt()) % Settings.MAX_CABIN_COUNT + 1;
@@ -27,6 +28,9 @@ public class PlaneGenerator extends TimerTask {
         }
         synchronized (planeQueue) {
             planeQueue.add(plane);
+            System.out.println(this + " Добавили новый самолёт ");
+            planeQueue.notify();
+            System.out.println(this + " Возобновили потоки ");
         }
     }
 }
