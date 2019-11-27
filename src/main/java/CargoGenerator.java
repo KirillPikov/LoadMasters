@@ -19,6 +19,7 @@ public class CargoGenerator extends TimerTask {
     /** Метод, выполняющий генерацю груза и его добавление в очередь грузов. */
     @Override
     public void run() {
+        System.out.println(this + " Начало задачи генератора груза ");
         int volume = Math.abs(new Random().nextInt()) % Settings.MAX_CARGO_VOLUME + Settings.MIN_CARGO_VOLUME;
         CargoType cargoType = CargoType.getRandomCargoType();
         Destination destination = Destination.getRandomDestination();
@@ -26,6 +27,9 @@ public class CargoGenerator extends TimerTask {
             cargoQueue.add(
                     new Cargo(volume, cargoType, destination)
             );
+            System.out.println(this + " Добавили новый груз ");
+            cargoQueue.notify();
+            System.out.println(this + " Возобновили потоки ");
         }
     }
 }
