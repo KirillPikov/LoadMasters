@@ -41,9 +41,11 @@ public class Cabin {
      * <li></li> ключ пары false - если значение пары отлично от null, то положили с заменой,
      * при этом значени пары и есть груз, на который заменили.
      */
+    // TODO removedCargo при возврате всегда не null
     public Pair<Boolean, Cargo> putCargo(Cargo cargo) {
         /* Груз, на который можем заменить передаваемый */
         Cargo removedCargo = null;
+        boolean isPut = false;
         /* Если в отсеке есть место */
         if(cargo.getVolume() <= freeVolume) {
             /* Но тип груза не соответствует типу отсека */
@@ -53,10 +55,12 @@ public class Cabin {
                         this.getType() != CargoType.DANGEROUS && this.getType() != CargoType.ORDINARY) {
                     cargoSet.add(cargo);
                     this.freeVolume -= cargo.getVolume();
+                    isPut = true;
                 }
             } else /* В случае, если есть место и типы совпадают, просто добавляем груз */ {
                 cargoSet.add(cargo);
                 this.freeVolume -= cargo.getVolume();
+                isPut = true;
             }
         } else if(cargo.getType() == this.getType()) /* В случае, если места нет, но типы совпадают */ {
             /* Пробегаемся по всем хранящимся грузам */
@@ -70,13 +74,13 @@ public class Cabin {
                         cargoSet.remove(removedCargo);
                         cargoSet.add(cargo);
                         this.freeVolume -= cargo.getVolume();
+                        isPut = true;
                         break;
                     }
                 }
             }
         }
-        Pair result = removedCargo == null ? new Pair(true, cargo) : new Pair(false, removedCargo);
-        return result;
+        return isPut ? new Pair(true, cargo) : removedCargo == null ? new Pair(false, null) : new Pair(false, removedCargo);
     }
 
     public int getMaxVolume() {
