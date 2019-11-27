@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.logging.Logger;
 
 /**
  * Самолёт.
@@ -62,6 +61,7 @@ public class Plane {
         for (Cabin cabin : cabins) {
             /* И пробуем туда положить груз */
             putResult = cabin.putCargo(cargo);
+            System.out.println("PUT REZULT = " + putResult);
             /* Определяем положился он в отсек или нет */
             if(putResult.getKey()) /* В этом случае однозначно положили без замены */ {
                 canTransfer = true;
@@ -98,11 +98,13 @@ public class Plane {
      * @return если самолёт загружен более чем на {@link Settings#CONGESTION} вернёт true.
      */
     public boolean isReady() {
-        int currentFreeVolume = 0;
+        double currentFreeVolume = 0;
         for (Cabin cabin: cabins) {
             currentFreeVolume += cabin.getFreeVolume();
         }
-        return maxVolume - (currentFreeVolume / maxVolume) >= Settings.CONGESTION;
+        double freeVaolumeProc = currentFreeVolume / maxVolume;
+        System.out.println(1.0 - freeVaolumeProc + " >= " + Settings.CONGESTION);
+        return 1.0 - freeVaolumeProc >= Settings.CONGESTION;
     }
 
     @Override
