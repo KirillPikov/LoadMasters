@@ -19,18 +19,18 @@ public class Airport {
     }
 
     public synchronized void startWork() throws InterruptedException {
-        Executor executor = Executors.newFixedThreadPool(3);
+        Executor executor = Executors.newFixedThreadPool(30);
         Timer timer = new Timer();
         TimerTask cargoGenerator = new CargoGenerator(mainCargoQueue);
         timer.schedule(cargoGenerator, 0, 1000);
         TimerTask planeGenerator = new PlaneGenerator(planeQueue);
-        timer.schedule(planeGenerator, 0, 20000);
+        timer.schedule(planeGenerator, 0, 20000000);
         while (true) {
             executor.execute(new LoadMaster(mainCargoQueue, garageCargoQueue, planeQueue));
-            System.out.println(Arrays.toString(garageCargoQueue.toArray()));
-            System.out.println(Arrays.toString(mainCargoQueue.toArray()));
-            System.out.println(Arrays.toString(planeQueue.toArray()));
-            Thread.sleep(2000);
+            System.out.println(this + " garageQueue: " + Arrays.toString(garageCargoQueue.toArray()));
+            System.out.println(this + " mainCargoQueue: " + Arrays.toString(mainCargoQueue.toArray()));
+            System.out.println(this + " planeQueue: " + Arrays.toString(planeQueue.toArray()));
+            Thread.sleep(1000);
         }
     }
 }
