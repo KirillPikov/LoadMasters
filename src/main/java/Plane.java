@@ -59,7 +59,7 @@ public class Plane {
         Pair<Boolean, Cargo> putResult = null;
         /* Пробегаемся по всем отсекам */
         for (Cabin cabin : cabins) {
-            /* И пробуем туда положить груз */
+            /* Пробуем положить груз в него */
             putResult = cabin.putCargo(cargo);
             /* Определяем положился он в отсек или нет */
             if(putResult.getKey()) /* В этом случае однозначно положили без замены */ {
