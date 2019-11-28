@@ -1,18 +1,24 @@
 import java.util.List;
 import java.util.Random;
 import java.util.TimerTask;
+import java.util.concurrent.Semaphore;
 
 /** Генератор самолётов. */
 public class PlaneGenerator extends TimerTask {
 
+    /** Семафор. */
+    private final Semaphore semaphore;
+
     /** Очередь самолётов. */
-    private List<Plane> planeQueue;
+    private final List<Plane> planeQueue;
 
     /**
      * Конструктор с параметром.
+     * @param semaphore семафор.
      * @param planeQueue очередь грузов, в которую будем генерировать новые.
      */
-    public PlaneGenerator(List<Plane> planeQueue) {
+    public PlaneGenerator(Semaphore semaphore, List<Plane> planeQueue) {
+        this.semaphore = semaphore;
         this.planeQueue = planeQueue;
     }
 
@@ -26,11 +32,14 @@ public class PlaneGenerator extends TimerTask {
         for (int i = 0; i < cabinCount; i++) {
             plane.addCabin(CabinGenerator.generateCabin());
         }
-        synchronized (planeQueue) {
+        try {
+            semaphore.acquire();
             planeQueue.add(plane);
             System.out.println(this + " Добавили новый самолёт ");
-            planeQueue.notify();
             System.out.println(this + " Возобновили потоки ");
+            semaphore.release();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
     }
 }

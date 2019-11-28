@@ -30,11 +30,11 @@ public class Settings {
     public static final int MAX_CABIN_COUNT = 4;
 
     /** Период генерации самолётов в милисекундах */
-    public static final int CARGO_GENERATING_PERIOD = 1000;
+    public static final int CARGO_GENERATING_PERIOD = 100;
 
     /** Период генерации самолётов в милисекундах */
     public static final int PLANE_GENERATING_PERIOD = 5000;
 
     /** Период генерации самолётов в милисекундах */
-    public static final int LOAD_MASTERS_CALL_PERIOD = 1000;
+    public static final int LOAD_MASTERS_CALL_PERIOD = 100;
 }
