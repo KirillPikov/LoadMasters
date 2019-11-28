@@ -61,7 +61,6 @@ public class Plane {
         for (Cabin cabin : cabins) {
             /* И пробуем туда положить груз */
             putResult = cabin.putCargo(cargo);
-            System.out.println("PUT REZULT = " + putResult);
             /* Определяем положился он в отсек или нет */
             if(putResult.getKey()) /* В этом случае однозначно положили без замены */ {
                 canTransfer = true;
