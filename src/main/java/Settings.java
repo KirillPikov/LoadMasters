@@ -12,7 +12,7 @@ public class Settings {
     public static final double CONGESTION = 0.8;
 
     /** Количество потоков погрузчиков (lodd-masters). */
-    public static final int LOAD_MASTER_COUNT = 4;
+    public static final int LOAD_MASTER_COUNT = 5;
 
     /** Минимальный объём, который может занимать груз. */
     public static final int MIN_CARGO_VOLUME = 1;
@@ -30,11 +30,11 @@ public class Settings {
     public static final int MAX_CABIN_COUNT = 4;
 
     /** Период генерации самолётов в милисекундах */
-    public static final int CARGO_GENERATING_PERIOD = 500;
+    public static final int CARGO_GENERATING_PERIOD = 1000;
 
     /** Период генерации самолётов в милисекундах */
-    public static final int PLANE_GENERATING_PERIOD = 700;
+    public static final int PLANE_GENERATING_PERIOD = 5000;
 
     /** Период генерации самолётов в милисекундах */
-    public static final int LOAD_MASTERS_CALL_PERIOD = 250;
+    public static final int LOAD_MASTERS_CALL_PERIOD = 1000;
 }
