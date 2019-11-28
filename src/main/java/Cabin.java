@@ -41,7 +41,6 @@ public class Cabin {
      * <li></li> ключ пары false - если значение пары отлично от null, то положили с заменой,
      * при этом значени пары и есть груз, на который заменили.
      */
-    // TODO removedCargo при возврате всегда не null
     public Pair<Boolean, Cargo> putCargo(Cargo cargo) {
         /* Груз, на который можем заменить передаваемый */
         Cargo removedCargo = null;
