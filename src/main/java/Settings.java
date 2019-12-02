@@ -2,9 +2,8 @@
  * Класс настроек приложения.
  */
 public class Settings {
-    /**
-     * Пустой приватный конструктор.
-     */
+
+    /** Пустой приватный конструктор. */
     private Settings() {
     }
 
@@ -33,7 +32,7 @@ public class Settings {
     public static final int CARGO_GENERATING_PERIOD = 1000;
 
     /** Период генерации самолётов в милисекундах */
-    public static final int PLANE_GENERATING_PERIOD = 5000;
+    public static final int PLANE_GENERATING_PERIOD = 1000;
 
     /** Период генерации самолётов в милисекундах */
     public static final int LOAD_MASTERS_CALL_PERIOD = 1000;

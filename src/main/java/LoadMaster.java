@@ -14,6 +14,7 @@ public class LoadMaster implements Runnable {
     /** Очередь доступных самолётов. */
     private final List<Plane> planeList;
 
+    /* Результат работы load-master'а */
     private Pair<Boolean, Cargo> resultPut;
 
     /**
@@ -111,7 +112,6 @@ public class LoadMaster implements Runnable {
                     /* В случае, если самолётов нет, переходим в ожидание */
                     planeList.wait();
                     System.out.println(this + " Дождался нового самолёта");
-
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -129,7 +129,7 @@ public class LoadMaster implements Runnable {
             }
         }
         /* В случае, если мы добавили груз и нашли самолёт, при этом он уже заполнен */
-        if(resultPut != null && plane != null && plane.isReady()) {
+        if(resultPut != null && resultPut.getValue() != null && plane != null && plane.isReady()) {
             System.out.println(this + " Самолёт готов к отправке, мест нет! " + plane);
             synchronized (planeList) {
                 /* Удаляем самолёт из очереди */

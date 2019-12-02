@@ -102,7 +102,7 @@ public class Plane {
             currentFreeVolume += cabin.getFreeVolume();
         }
         double freeVaolumeProc = currentFreeVolume / maxVolume;
-        System.out.println(1.0 - freeVaolumeProc + " >= " + Settings.CONGESTION);
+        System.out.format("%.3f >= %.3f \n", 1f - freeVaolumeProc, Settings.CONGESTION);
         return 1.0 - freeVaolumeProc >= Settings.CONGESTION;
     }
 

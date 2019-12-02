@@ -3,9 +3,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-/**
- * Тип груза.
- */
+/** Тип груза. */
 public enum CargoType {
 
     /** Живой. */

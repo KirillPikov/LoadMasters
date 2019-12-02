@@ -3,9 +3,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-/**
- * Место назначения грузов и самолётов.
- */
+/** Место назначения грузов и самолётов. */
 public enum Destination {
 
     /** Анапа. */
